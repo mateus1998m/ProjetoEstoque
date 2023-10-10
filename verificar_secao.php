@@ -1,5 +1,4 @@
 <?php
-    session_start();
 
     //Se nao existir uma variavel email e senha na minha secao
     if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {

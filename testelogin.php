@@ -1,10 +1,9 @@
 <?php
-    session_start();
    
     if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha'])) {
         
         //incluindo informacao do Banco de dados
-        include_once('/config.php');
+        include_once('config.php');
         
         // Armazenar informações do usuário em variáveis de sessão
         $email = $_POST['email'];
@@ -26,12 +25,12 @@
             //
             $_SESSION['userlog'] = true;
             // Esta linha redireciona o usuário para a página "sistema.html" após o login bem-sucedido.
-            header('location: /Sistema/sistema.html');
+            header('location: sistema.php');
         }
 
     }else {
         //Esta linha redireciona o usuário de volta para a página de login (index.html) se o formulário não foi enviado ou se os campos de email e senha estão vazios.
-        header('location: /index.html');
+        header('location: index.html');
         $_SESSION['userlog'] = false;
     }
 ?>
