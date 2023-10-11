@@ -13,8 +13,12 @@
                 <div class="card-login">
                     <h1>CADASTRE-SE</h1>
                     <div class="textfield">
-                        <label for="Nome">Nome completo</label>
-                        <input type="text" name="nome" placeholder="Nome Completo">
+                        <label for="Nome">Nome</label>
+                        <input type="text" name="nome" placeholder="Nome">
+                    </div>
+                    <div class="textfield">
+                        <label for="Nome">Sobrenome</label>
+                        <input type="text" name="sobrenome" placeholder="Sobrenome">
                     </div>
                     <div class="textfield">
                         <label for="email">Email</label>

@@ -1,9 +1,9 @@
 <?php
-   
     if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha'])) {
-        
+
+        include_once("session.php");
         //incluindo informacao do Banco de dados
-        include_once('config.php');
+        include_once('config_dblogin.php');
         
         // Armazenar informações do usuário em variáveis de sessão
         $email = $_POST['email'];
@@ -15,9 +15,13 @@
         //Esta linha executa a consulta SQL no banco de dados usando a conexão estabelecida no arquivo "config.php". O resultado da consulta é armazenado na variável $result.
         $result = $conexao->query($sql);
 
-        if ($result->num_rows < 1) { //Esta linha verifica se o número de linhas retornadas pela consulta é menor que 1, o que significa que não há registros correspondentes no banco de dados.
+        if ($result->num_rows < 1) { //Esta linha verifica se o número de linhas retornadas pela consulta é menor que 1, o que significa que não ha registros correspondentes no banco de dados. Ou seja Senha e email incorretos.
             
-        } else {//Esta linha é o bloco de código que é executado se o formulário não foi enviado ou se os campos de email e senha estão vazios.
+            header('location: index.html');
+            $_SESSION['userlog'] = false;
+            
+        }
+        else {//Esta linha é o bloco de código que é executado se o formulário não foi enviado ou se os campos de email e senha estão vazios.
 
             //Esta linha armazena as variáveis de email e senha na sessão PHP.
             $_SESSION['email'] = $email;
@@ -25,7 +29,7 @@
             //
             $_SESSION['userlog'] = true;
             // Esta linha redireciona o usuário para a página "sistema.html" após o login bem-sucedido.
-            header('location: sistema.php');
+            header('location: pag_sistema.php');
         }
 
     }else {

@@ -1,23 +1,14 @@
 <?php
-    require_once("userlog.php");
-    require_once("verificar_secao.php");
-    //Host
-    $dbHost = '127.0.0.2';
-    //Nome de acesso ao DB
-    $dbUsername = 'root';
-    //Senha do DB
-    $dbPassword = '';
-    //Nome do meu DB  (DB = Data Base ou Banco de Dados)
-    $dbName = 'id21340598_estoque';
-
-    // Coneccao com banco de dados - Informacoes como user local e senha do DB
-    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+    include_once("session.php");
+    require_once("config_verificar_secao.php");
+    require_once("config_dbestoque.php");
+    require_once("config_name.php");
 
 // Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obter os valores do formulário
     // NOME VARIAVEL  - NOME FORMULARIO
-    $nomepessoa = $_POST['nomepessoa'];
+    $nomepessoa = $nomeUsuario;
     $produto = $_POST['produto'];
     $quantidade = $_POST['quantidade'];
     $quilo = $_POST['quilo'];
@@ -35,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inserir os dados no banco de dados
     //INSER INTO = Nomes das Colunas no DB
     //VALUES = Nome das viariaveis criada com as info do Formulario
-    $query = "INSERT INTO estoque (pessoanome, produto, quantidade, quilo, dataentrada, datasaida) VALUES ('$nomepessoa', '$produto', '$quantidade', '$quilo', '$dataEntrada', '$dataSaida')";
-    $resultado = mysqli_query($conexao, $query);
+    $query = "INSERT INTO estoque (pessoanome, produto, quantidade, quilo, dataentrada, datasaida) VALUES ('$nomeUsuario', '$produto', '$quantidade', '$quilo', '$dataEntrada', '$dataSaida')";
+    $resultado = mysqli_query($conexaodbestoque, $query);
 
     if ($resultado) {
         echo "Dados inseridos com sucesso!";
     } else {
-        echo "Erro ao inserir os dados: " . mysqli_error($conexao);
+        echo "Erro ao inserir os dados: " . mysqli_error($conexaodbestoque);
     }
 }
 ?>
@@ -56,23 +47,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- MENU RESPONSIVO -->
     <header>
-        <nav>
-          <a class="logo" >Sistema</a>
-          <div class="mobile-menu">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-          </div>
-          <ul class="nav-list">
-            <li><a href="/Sistema/sistema.html">Início</a></li>
-            <li><a href="/Consulta/consulta.html">Consulta</a></li>
-            <li><a href="/Informacoes/Informacoes.html">Informação</a></li>
-            <li><a href="/sair.php">Sair</a></li>
-          </ul>
-        </nav>
-    </header>
-      <script src="/mobile-navbar.js"></script>
-      <!-- FIM MENU RESPONSIVO -->
+      <nav>
+        <a class="logo" >Sistema</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="pag_sistema.php">Início</a></li>
+          <li><a href="pag_consulta.php">Consulta</a></li>
+          <li><a href="pag_informacoes.php">Informação</a></li>
+          <li><a href="config_sair.php">Sair</a></li>
+        </ul>
+      </nav>
+  </header>
+  <script src="mobile-navbar.js"></script>
+  <!-- FIM MENU RESPONSIVO -->
 
     <!-- Inicio corpo site -->
     <main class="padrao">
@@ -83,11 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="right-login">
                 <div class="card-login">
                     <h1 id="estoque">Entrada e Saida de Produltos</h1>
-                    <!-- INPUT NOME PESSOA -->
-                    <div class="textfield">
-                        <label for="nomepessoa">Nome de quem vai dar Entrada ou Saida</label>
-                        <input type="text" name="nomepessoa" placeholder="Nome">
-                    </div>
                     <!-- Produlto -->
                     <div class="textfield">
                         <label for="produlto">Produlto</label>

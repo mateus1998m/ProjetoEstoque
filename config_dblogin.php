@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    include_once("session.php");
     $dbHost = '127.0.0.2:3306';
     $dbUsername = 'root';
     $dbPassword = '';
