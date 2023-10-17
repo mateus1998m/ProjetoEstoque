@@ -7,7 +7,8 @@
     <title>Cadastro</title>
 </head>
 <body>
-    <form action="/cadastro.php" method="post">
+<?php include 'cabecalho.php'; ?>
+    <form action="config_cadastro_login.php" method="post">
         <div class="main-login">
             <div class="right-login">
                 <div class="card-login">

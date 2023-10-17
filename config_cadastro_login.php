@@ -19,7 +19,7 @@
 
         //Após a execução da consulta SQL, o código verifica se a inserção foi bem-sucedida usando a variável $result. Se a inserção for bem-sucedida, o código usa header('Location: index.html') para redirecionar o usuário para a página "index.html". O exit é usado para interromper a execução do código após o redirecionamento.
         if($result) {
-            header('Location: index.html');
+            header('Location: pag_cadastro_finalizado.php');
             exit;
         } else {
             echo "Erro ao inserir os dados no banco de dados.";

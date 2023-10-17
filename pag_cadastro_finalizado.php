@@ -7,13 +7,15 @@
     <title>Cadastro</title>
 </head>
 <body>
+    <form action="config_cadastro_login.php" method="post">
         <div class="main-login">
             <div class="right-login">
                 <div class="card-login">
-                    <h2 id="f_casdastro">Cadastro feito com sucesso!</h2>
+                    <h1>Sucesso!</h1>
                     <button class="btn-login" type="button" onclick="window.location.href = 'index.html'">LOGIN</button>
                 </div>
             </div>
         </div>
+    </form>
 </body>
 </html>

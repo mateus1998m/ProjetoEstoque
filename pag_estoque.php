@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomepessoa = $nomeUsuario;
     $produto = $_POST['produto'];
     $quantidade = $_POST['quantidade'];
-    $quilo = $_POST['quilo'];
     $data = $_POST['data'];
     $escolha = $_POST['es'];
     $dataEntrada = '0000-00-00';
@@ -22,22 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($escolha == "saida") {
         $dataSaida = $data;
     }
-
-    // Inserir os dados no banco de dados
-    //INSER INTO = Nomes das Colunas no DB
-    //VALUES = Nome das viariaveis criada com as info do Formulario
-    $query = "INSERT INTO estoque (pessoanome, produto, quantidade, quilo, dataentrada, datasaida) VALUES ('$nomeUsuario', '$produto', '$quantidade', '$quilo', '$dataEntrada', '$dataSaida')";
-    $resultado = mysqli_query($conexaodbestoque, $query);
-
-    if ($resultado) {
-        echo "Dados inseridos com sucesso!";
-    } else {
-        echo "Erro ao inserir os dados: " . mysqli_error($conexaodbestoque);
-    }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,25 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Estoque</title>
 </head>
 <body>
-    <!-- MENU RESPONSIVO -->
-    <header>
-      <nav>
-        <a class="logo" >Sistema</a>
-        <div class="mobile-menu">
-          <div class="line1"></div>
-          <div class="line2"></div>
-          <div class="line3"></div>
-        </div>
-        <ul class="nav-list">
-          <li><a href="pag_sistema.php">Início</a></li>
-          <li><a href="pag_consulta.php">Consulta</a></li>
-          <li><a href="pag_informacoes.php">Informação</a></li>
-          <li><a href="config_sair.php">Sair</a></li>
-        </ul>
-      </nav>
-  </header>
-  <script src="mobile-navbar.js"></script>
-  <!-- FIM MENU RESPONSIVO -->
+<?php include 'cabecalho.php'; ?>
 
     <!-- Inicio corpo site -->
     <main class="padrao">
@@ -76,23 +45,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h1 id="estoque">Entrada e Saida de Produltos</h1>
                     <!-- Produlto -->
                     <div class="textfield">
-                        <label for="produlto">Produlto</label>
-                        <input type="text" name="produto" placeholder="Produto">
+                        <label for="produto">Produto</label>
+                        <select class="textfield" name="produto">
+                        <option value="carne">Picanha - UNIDADE</option>
+                        <option value="carne">Contra File - Kg</option>
+                        <option value="carne">File Mignom - Kg</option>
+                        <option value="carne">Acem - Kg</option>
+                        <option value="batata">Batata Palito - UNIDADE</option>
+                        <option value="batata">Batata Crinckle - UNIDADE</option>
+                        <option value="linguica">Linguiça - UNIDADE</option>
+                        </select>
                     </div>
-                    <!-- Quantidade -->
+                    <!-- Quantidade / Kg -->
                     <div class="textfield">
-                        <label for="quantidade">Quantidade</label>
+                        <label for="quantidade">Quantidade / Kg</label>
                         <input type="text" name="quantidade" placeholder="Quantidade">
-                    </div>
-                    <!-- Quilo -->
-                    <div class="textfield">
-                        <label for="endereco">Quilo</label>
-                        <input type="text" name="quilo" placeholder="Quilo">
                     </div>
                     <!-- Campo DATA -->
                     <div class="textfield">
                         <label for="data">Data</label>
-                        <input type="date" name="data" id="data">
+                        <input type="date" name="data" id="data" value="<?php echo date('Y-m-d'); ?>">
                     </div>
                     <div class="e-s">
                         <!-- INPUT DE ENTRADA OU SAIDA -->
@@ -100,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="entrada" class="radio-label">Entrada</label>
 
                         <input type="radio" name="es" id="saida" value="saida" onclick="uncheckEntrada()">
-                        <label for="saida">Saida</label>
+                        <label for="saida" class="radio-label">Saida</label>
 
                         <script>
                         function uncheckSaida() {
@@ -114,7 +86,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     </div>
                     <!-- Botao ENVIAR formulario -->
+                    <?php 
+                        if (isset($_POST['submit'])){
+                            if (!empty($produto) && !empty($quantidade) && !empty($escolha)) {
+                                $query = "INSERT INTO estoque (pessoanome, produto, quantidade, dataentrada, datasaida) VALUES ('$nomeUsuario', '$produto', '$quantidade', '$dataEntrada', '$dataSaida')";
+                                $resultado = mysqli_query($conexaodbestoque, $query);
+                                echo '<h1 id="estoque">Sucesso.</h1>';
+                            }else {
+                                echo '<h1 id="estoque">Complete todos os dados.</h1>';
+                            }
+                        }
+                    ?>
                     <input type="submit" class="btn-login" name="submit" id="submit" value="CADASTRAR">
+                    <button class="btn-login" type="button" onclick="window.location.href = 'pag_estoque.php'">NOVO CADASTRO</button>
                 </div>
             </div>
         </div>
